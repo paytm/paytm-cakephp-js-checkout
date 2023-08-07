@@ -1,5 +1,5 @@
 {
-    "name": "paytm/paytm-payment",
+    "name": "paytm/payment",
     "type": "cakephp-plugin",
     "description": "Paytm JS Checkout for cakephp",
     "keywords": ["cakephp", "package"],
