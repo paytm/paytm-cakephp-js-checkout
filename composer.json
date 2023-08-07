@@ -1,7 +1,7 @@
 {
     "name": "paytm/paytm-payment",
     "type": "cakephp-plugin",
-    "description": "Payment using paytm",
+    "description": "Paytm JS Checkout for cakephp",
     "keywords": ["cakephp", "package"],
     "license": "MIT",
     "authors": [
