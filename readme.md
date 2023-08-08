@@ -129,7 +129,7 @@ class PaytmController extends Controller
 ```
 ### Making a view page
 ```
-<!-- File: src/Template/ControllerName/payment.php -->
+<!-- File: templates/Paytm/paytm.php -->
 <?= $this->Html->css('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css') ?>
 
 <div id="paytm-pg-spinner" class="paytm-pg-loader" style="display: none;">
@@ -256,7 +256,7 @@ class PaytmController extends Controller
 ```
 ### Making a sucess page
 ```
-<!-- File: src/Template/ControllerName/success.php -->
+<!-- File: templates/Paytm/success.php -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -272,7 +272,7 @@ class PaytmController extends Controller
 ```
 ### Making a error page
 ```
-<!-- File: src/Template/ControllerName/error.php -->
+<!-- File: templates/Paytm/error.php -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -347,3 +347,4 @@ public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue{
 
 
 
+```
