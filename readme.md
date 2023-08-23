@@ -56,7 +56,7 @@ class PaytmController extends Controller
     // display a form for payment
     public function initiate()
     {
-        $this->render('paytm')
+        $this->render('paytm');
     }
 
     /* Make payment */
@@ -77,7 +77,8 @@ class PaytmController extends Controller
             'txnAmount' => $amount, //mandatory
             'orderId' => $order_id //mandatory
         ];
-        $txntoken = Paytm::initiatePayment($userData);
+        $Paytm = new Paytm();
+        $txntoken = $Paytm->initiatePayment($userData);
         if(!empty($txntoken)){
             $data = array('success'=> true,'txnToken' => $txntoken, 'txnAmount' => $amount, 'orderId' =>$order_id );
             $jsonData = json_encode($data);
@@ -110,7 +111,8 @@ class PaytmController extends Controller
         if(! empty($_POST) && isset($_POST['STATUS'])){
              // Access the POST data from the request
             $callbackData = $this->request->getData();
-            $requestData = Paytm::verifyPaymentResponse($_POST);
+            $Paytm = new Paytm();
+            $requestData = $Paytm->verifyPaymentResponse($_POST);
             if(isset($requestData['body']) && $requestData['body']['resultInfo']['resultStatus'] == 'TXN_SUCCESS'){
                 $msg = "Thank you for your order. Your transaction has been successful.";
                 $this->set(compact('msg'));
@@ -177,9 +179,9 @@ class PaytmController extends Controller
 <?= $this->Html->script('https://code.jquery.com/jquery-2.2.4.min.js', ['integrity' => 'sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=', 'crossorigin' => 'anonymous']) ?>
 
 <?php if(env('PAYTM_ENVIRONMENT')=='production'){?>
-        <script type="application/javascript" crossorigin="anonymous" src="https:\\securegw.paytm.in\merchantpgpui\checkoutjs\merchants\<?php echo env('MERCHANT_ID')?>.js" ></script>
+        <script type="application/javascript" crossorigin="anonymous" src="https:\\securegw.paytm.in\merchantpgpui\checkoutjs\merchants\<?php echo env('PAYTM_MERCHANT_ID')?>.js" ></script>
     <?php }else{ ?>
-       <script type="application/javascript" crossorigin="anonymous" src="https:\\securegw-stage.paytm.in\merchantpgpui\checkoutjs\merchants\<?php echo env('MERCHANT_ID')?>.js" ></script>
+       <script type="application/javascript" crossorigin="anonymous" src="https:\\securegw-stage.paytm.in\merchantpgpui\checkoutjs\merchants\<?php echo env('PAYTM_MERCHANT_ID')?>.js" ></script>
     <?php }  ?>
 
 <script type="text/javascript">
@@ -216,8 +218,8 @@ class PaytmController extends Controller
                 var token = '<?= $this->request->getAttribute('csrfToken') ?>';
                 console.log(data.orderId);
                 console.log(data.txnToken);
-                console.log(data.amount);
-                invokeBlinkCheckoutPopup(data.orderId, data.txnToken, data.amount,token);
+                console.log(data.txnamount);
+                invokeBlinkCheckoutPopup(data.orderId, data.txnToken, data.txnamount,token);
             }
         });
 
@@ -333,6 +335,7 @@ public function middleware(MiddlewareQueue $middlewareQueue): MiddlewareQueue{
     ->add(new BodyParserMiddleware())
 
     ->add($csrf);
+    return $middlewareQueue;
   }
 ```
 ** Add autoload file in composer.json file in your project directory

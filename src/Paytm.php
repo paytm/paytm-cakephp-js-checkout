@@ -54,7 +54,7 @@ class Paytm
 	}
 
 
-	public function paytmCustomArray($paytmParams=array(),$env){
+	public function paytmCustomArray($paytmParams=array(),$env=""){
 
 		if (!array_key_exists("requestType", $paytmParams)) {
 		    $paytmParams["requestType"] = "Payment";
